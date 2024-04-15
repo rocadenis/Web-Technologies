@@ -1,0 +1,194 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Resource finder
+    </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 15px 0;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+        }
+        .content {
+            padding: 20px;
+        }
+        .website {
+            margin-bottom: 20px;
+            border: 1px solid white; 
+            padding: 20px;
+            background-color: #555; 
+            border-radius: 10px;
+        }
+        .website h2 {
+            margin: 0;
+            font-size: 1.5em; 
+        }
+        .website p {
+            margin-bottom: 10px;
+        }
+        .website a {
+            color: rgb(14, 162, 207); 
+            text-decoration: none;
+        }
+        .menu-btn {
+    text-decoration: none; 
+}
+
+.menu-btn:hover {
+    text-decoration: none;  
+}
+
+    </style>
+   
+    <link rel="icon" href="image.png" />
+     <!--Font -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+     integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+     crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <link rel="stylesheet" type="text/css" href="content.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <a href="content.html" class="btn-link" id="home-btn">
+            <div class="ReFi-Logo">
+                <img src="logoReFi.jpg" style="width: 100px; height: auto;" />
+            </div>
+        </a>
+        <a href="#Tutorial" class="menu-btn " id="Tutorial-btn">
+            Tutorials
+            <i class="fa-solid"></i>
+        </a>
+        <a href="websites.html" class="menu-btn " id="websites-btn">
+            Websites
+            <i class="fa-solid"></i>
+        </a>
+        <a href="#presentations" class="menu-btn " id="presentations-btn">
+            Presentations
+            <i class="fa-solid" class="menu-btn"></i>
+        </a>
+
+        <!---mobile view menu-->
+        <div class="menu-btn" id="Menu-btn-Mobile">
+            Menu
+            <i class="fa-solid" class="menu-btn"></i>
+        </div>
+    </div>
+<div class="header-right">
+        
+        </div>
+        <div class="settings-container">
+            "Username"
+            <input type="checkbox" id="settingsToggle" class="settings-toggle">
+            <label for="settingsToggle" class="settings-btn">
+                <i class="fas fa-cog"></i>
+            </label>
+            <div class="settings-dropdown">
+                <ul>
+                    <li><a href="Profile.html">Your Profile</a></li>
+                    <li><a href="aboutUs.html">About Us</a></li>
+                    <li><a href="index.html">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!--nested navbar-->
+    <div class="nested-navigation-container nested_navigation_hidden" id="nested-navigation-container_id">
+        <div class="nested-navigation_container_close-btn" id="nested-navigation-close-Btn">
+            <button><i class="fa-solid fa-xmark" class="menu-btn"></i></button>
+        </div>
+
+        <div class="nested-navigation-container_content">
+            <h1>Tutorials</h1>
+            <div class="nested-navigation-container_content_data">
+                <div class="nested-navigation_item">
+                    <h2>Backend</h2>
+                    <a href="learngit.html">Learn Git</a>
+                    <a href="learnpython.html">Learn Python</a>
+                    <a href="learnsql.html">Learn SQL</a>
+                    <a href="learnphp.html">Learn PHP</a>
+                    <a href="learnjava.html">Learn Java</a>
+                    <a href="learnc.html">Learn C</a>
+                    <a href="learnc++.html">Learn C++</a>
+                </div>
+                <div class="nested-navigation_item">
+                    <h2>HTML/CSS</h2>
+                    <a href="learnhtml.html">Learn HTML</a>
+                    <a href="learncss.html">Learn CSS</a>
+                    <a href="learnrwd.html">Learn RWD</a>
+                    <a href="learnsvg.html">Learn SVG</a>
+                    <a href="learncanvas.html">Learn Canvas</a>
+                    <a href="learngraphics.html">Learn Graphics</a>
+                </div>
+                <div class="nested-navigation_item">
+                    <h2>Data analytics</h2>
+                    <a href="learnai.html">Learn AI</a>
+                    <a href="learnml.html">Learn Machine Learning</a>
+                    <a href="learngenerativeai.html">Learn Generative AI</a>
+                    <a href="learnchatgpt.html">Learn ChatGPT-4</a>
+                    <a href="learngooglebard.html">Learn Google Bard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="content">
+    <div class="website">
+        <h2><a href="https://mikkegoes.com/best-websites-to-learn-coding/">freeCodeCamp.org</a></h2>
+        <p>freeCodeCamp.org este un site excelent pentru a învăța programare gratuit. Oferă o multitudine de cursuri care acoperă o gamă largă de subiecte, inclusiv HTML/CSS, JavaScript, baze de date, securitatea web și multe altele.</p>
+    </div>
+    <div class="website">
+        <h2><a href="https://mikkegoes.com/best-websites-to-learn-coding/">Codecademy</a></h2>
+        <p>O platformă populară pentru învățarea diferitelor limbaje de programare.</p>
+    </div>
+    <div class="website">
+        <h2><a href="https://mikkegoes.com/best-websites-to-learn-coding/">Udemy</a></h2>
+        <p>Oferă o varietate de cursuri de programare, unele gratuite, altele contra cost.</p>
+    </div>
+    <div class="website">
+        <h2><a href="https://mikkegoes.com/best-websites-to-learn-coding/">Coursera</a></h2>
+        <p>Găzduiește cursuri de programare de la universități de top din întreaga lume.</p>
+    </div>
+    <div class="website">
+        <h2><a href="https://github.com/">GitHub</a></h2>
+        <p>Este cea mai mare platformă de dezvoltare software din lume și cea mai mare comunitate open-source.</p>
+    </div>
+    <div class="website">
+        <h2><a href="https://teamtreehouse.com/">Treehouse</a></h2>
+        <p>Este un nume bine cunoscut în lumea dezvoltării web, în special ca un loc unde poți învăța să programezi gratuit.</p>
+    </div>
+    <div class="website">
+        <h2><a href="https://www.khanacademy.org/">Khan Academy</a></h2>
+        <p>Oferă cursuri de programare interactive pentru începători.</p>
+    </div>
+    <div class="website">
+        <h2><a href="https://www.w3schools.com/">W3Schools</a></h2>
+        <p>Este un site web educativ pentru învățarea tehnologiilor web.</p>
+    </div>
+    <div class="website">
+        <h2><a href="https://www.edx.org/">EdX</a></h2>
+        <p>Oferă cursuri online de la cele mai bune universități din lume.</p>
+    </div>
+    <div class="website">
+        <h2><a href="https://zerotomastery.io/">Zero To Mastery</a></h2>
+        <p>Oferă cursuri de programare care te ajută să devii un dezvoltator de la zero.</p>
+    </div>
+</div>
+</div>
+<script src="script.js"></script>
+
+
+</body>
+</html>
