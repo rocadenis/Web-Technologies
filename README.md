@@ -1,5 +1,0 @@
-# Web-Technologies
-Roca Denis Dominic and Popa Sabin
-
-ReFi (Resource Finder)
-(EN) Develop a platform based on (micro)services that supports developers in collecting, interrelating and finding resources of interest – i.e. specialized websites, tutorials, multimedia presentations, source code, software projects etc. – targeting creative programming: creative coding (https://github.com/terkelg/awesome-creative-coding) – depending on the purpose, the programming language/languages (e.g., JavaScript, WebGL, WebAssembly), the desired result (2D illustration, 3D virtual world, animation, sound content), the manner of interaction (classical, tactile, vocal) and others. Based on the purpose (“I want to create landscapes using fractals”, “I need a polyphonic generator”) and/or the user's preferences (e.g., “only JavaScript/TypeScript implementations”), the system will recommend existing software solutions (frameworks, libraries, components etc.) necessary to create an artifact. At least 3 examples will be made regarding the practical use of the created platform.
