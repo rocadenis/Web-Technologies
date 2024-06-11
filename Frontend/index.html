@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Finder</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Resource Finder</h1>
+            <nav>
+                <ul>
+                    <li><a href="admin.html" class="btn nav-btn">Settings</a></li>
+                    <li><a href="login.html" class="btn nav-btn">Login</a></li>
+                    <li><a href="signup.html" class="btn nav-btn">Sign Up</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="hero">
+            <h2>Welcome to Resource Finder</h2>
+            <p>Your one-stop platform for discovering and sharing creative coding resources.</p>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search for resources...">
+                <button class="search-btn">Search</button>
+            </div>
+            <div class="filter-container">
+                <button class="filter-btn">Filters</button>
+                <div class="filters">
+                    <label for="language">Programming Language:</label>
+                    <select id="language" name="language">
+                        <option value="javascript">JavaScript</option>
+                        <option value="python">Python</option>
+                        <option value="java">Java</option>
+                        <option value="csharp">C#</option>
+                        <option value="cpp">C++</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Resource Finder</p>
+    </footer>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
