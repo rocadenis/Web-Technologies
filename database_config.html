@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Management - Resource Finder</title>
+    <link rel="stylesheet" href="css/database_config.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Resource Finder</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="btn nav-btn">Home</a></li>
+                    <li><a href="admin.html" class="btn nav-btn">Account Settings</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="table-container">
+            <h2>Database Management</h2>
+            <table id="database-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>URL</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be populated here dynamically -->
+                </tbody>
+            </table>
+            <div class="actions">
+                <button class="btn" onclick="importJSON()">Import JSON</button>
+                <button class="btn" onclick="exportJSON()">Export JSON</button>
+                <button class="btn" onclick="importCSV()">Import CSV</button>
+                <button class="btn" onclick="exportCSV()">Export CSV</button>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Resource Finder</p>
+    </footer>
+    <script src="js/database_management.js"></script>
+</body>
+</html>
