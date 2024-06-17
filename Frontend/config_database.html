@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Management - Resource Finder</title>
+    <link rel="stylesheet" href="css/database_config.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Resource Finder</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="btn nav-btn">Home</a></li>
+                    <li><a href="admin.html" class="btn nav-btn">Account Settings</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="table-container">
+            <h2>Database Management</h2>
+            <table id="database-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>URL</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                </tbody>
+            </table>
+            <form id="add-row-form">
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" name="url" placeholder="URL" required>
+                <input type="text" name="description" placeholder="Description" required>
+                <button type="submit" class="btn">Add Row</button>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Resource Finder</p>
+    </footer>
+    <script>
+        $(document).ready(function() {
+            loadTableData();
+
+            $('#add-row-form').submit(function(event) {
+                event.preventDefault();
+                console.log('Submitting form...');
+                $.ajax({
+                    url: '../../Web-Technologies/Backend/database/add_row.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        console.log('Response:', response);
+                        alert('New record created successfully');
+                        loadTableData();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', xhr.responseText);
+                    }
+                });
+            });
+        });
+
+        function loadTableData() {
+            $.ajax({
+                url: '../../Web-Technologies/Backend/database/get_rows.php',
+                type: 'GET',
+                success: function(data) {
+                    $('#database-table tbody').html(data);
+                }
+            });
+        }
+
+        function saveToDatabase(editableObj, column, id) {
+            $.ajax({
+                url: '../../Web-Technologies/Backend/database/save_edit.php',
+                type: 'POST',
+                data: 'column=' + column + '&editval=' + editableObj.innerText + '&id=' + id,
+                success: function(response) {
+                    console.log('Save successfully');
+                }
+            });
+        }
+
+        function deleteRow(id) {
+            if (confirm('Are you sure you want to delete this row?')) {
+                $.ajax({
+                    url: '../../Web-Technologies/Backend/database/delete_row.php',
+                    type: 'POST',
+                    data: 'id=' + id,
+                    success: function(response) {
+                        loadTableData();
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
