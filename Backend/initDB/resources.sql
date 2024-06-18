@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gazdă: localhost
--- Timp de generare: iun. 17, 2024 la 11:43 PM
+-- Timp de generare: iun. 18, 2024 la 07:06 PM
 -- Versiune server: 10.4.28-MariaDB
 -- Versiune PHP: 8.2.4
 
@@ -42,7 +42,7 @@ CREATE TABLE `resources` (
 
 INSERT INTO `resources` (`id`, `name`, `url`, `realtime_collaboration`, `live_coding`, `description`) VALUES
 (1, 'Processing', 'https://processing.org/', NULL, NULL, 'Processing is a flexible software sketchbook and a language for learning how to code within the context of the visual arts.'),
-(2, 'Cinder', 'https://libcinder.org/', NULL, NULL, 'Cinder is a community-developed, free and open source library for professional-quality creative coding in C++.'),
+(2, 'Cinder', 'https://libcinder.org/', NULL, NULL, 'Cinder is a community-developed, free and open source library for professional-quality creative coding in C  .'),
 (3, 'openFrameworks', 'https://openframeworks.cc/', NULL, NULL, 'openFrameworks is an open source C++ toolkit for creative coding.'),
 (4, 'C4', 'https://www.c4ios.com/', NULL, NULL, 'C4 is an open-source API for rapid-prototyping of computational art.'),
 (5, 'Unity', 'https://unity.com/', NULL, NULL, 'Unity is a cross-platform game engine developed by Unity Technologies.'),
@@ -160,8 +160,9 @@ INSERT INTO `resources` (`id`, `name`, `url`, `realtime_collaboration`, `live_co
 (117, 'ISF', 'https://vdmx.vidvox.net/tutorials/isf', NULL, NULL, 'ISF is a standard for sharing GLSL shaders between applications.'),
 (118, 'glslViewer', 'https://github.com/patriciogonzalezvivo/glslViewer', NULL, NULL, 'glslViewer is a command-line tool for creating and sharing GLSL shaders.'),
 (119, 'DrawBot', 'http://drawbot.com/', NULL, NULL, 'DrawBot is a Python-based graphics module for creating 2D graphics.'),
-(120, 'Klak', 'https://github.com/keijiro/Klak', NULL, NULL, 'Klak is a tool for creating real-time graphics.'),
-(121, 'basil.js\n\n', 'https://basiljs.ch/', NULL, NULL, 'basil.js is a JavaScript library for creating generative art.');
+(120, 'basil.js', 'https://basiljs.ch/', NULL, NULL, 'basil.js is a JavaScript library for creating generative art.'),
+(122, 'new.js', 'new@new.new', NULL, NULL, 'testing'),
+(123, 'check.jsx', 'https://autoincrement.id', NULL, NULL, 'i found what wich was the real problem');
 
 --
 -- Indexuri pentru tabele eliminate
@@ -172,6 +173,16 @@ INSERT INTO `resources` (`id`, `name`, `url`, `realtime_collaboration`, `live_co
 --
 ALTER TABLE `resources`
   ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pentru tabele eliminate
+--
+
+--
+-- AUTO_INCREMENT pentru tabele `resources`
+--
+ALTER TABLE `resources`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=249;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
