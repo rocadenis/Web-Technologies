@@ -33,13 +33,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                   
+                    <!-- Rows will be populated here dynamically -->
                 </tbody>
             </table>
             <form id="add-row-form">
-                <input type="text" name="name" placeholder="Name" required>
-                <input type="text" name="url" placeholder="URL" required>
-                <input type="text" name="description" placeholder="Description" required>
+                <input type="text" name="name" placeholder="Name" autocomplete="name" required>
+                <input type="text" name="url" placeholder="URL" autocomplete="url" required>
+                <input type="text" name="description" placeholder="Description" autocomplete="off" required>
                 <button type="submit" class="btn">Add Row</button>
             </form>
         </div>
@@ -59,7 +59,6 @@
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
-                        console.log('Response:', response);
                         alert('New record created successfully');
                         loadTableData();
                     },
