@@ -65,3 +65,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('search-btn').addEventListener('click', function() {
+        const searchTerm = document.getElementById('search-input').value;
+        const language = document.getElementById('language').value;
+
+        fetch(`../backend/services/search_resources.php?q=${encodeURIComponent(searchTerm)}&language=${encodeURIComponent(language)}`)
+            .then(response => response.json())
+            .then(data => displayResults(data))
+            .catch(error => console.error('Error:', error));
+    });
+});
+
+function displayResults(data) {
+    const resultsContainer = document.getElementById('results');
+    resultsContainer.innerHTML = '';
+
+    if (data.length > 0) {
+        data.forEach(resource => {
+            const resourceDiv = document.createElement('div');
+            resourceDiv.className = 'resource';
+
+            resourceDiv.innerHTML = `
+                <h3>${resource.name}</h3>
+                <p><a href="${resource.url}" target="_blank">${resource.url}</a></p>
+                <p>${resource.description}</p>
+            `;
+
+            resultsContainer.appendChild(resourceDiv);
+        });
+    } else {
+        resultsContainer.innerHTML = '<p>No results found.</p>';
+    }
+}
