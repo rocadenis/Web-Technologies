@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = sanitizeInput(document.getElementById('email').value);
             const password = sanitizeInput(document.getElementById('password').value);
 
-            fetch('login_user.php', {
+            fetch('../../Web-Technologies/Backend/user-services/login_user.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = sanitizeInput(document.getElementById('email').value);
             const password = sanitizeInput(document.getElementById('password').value);
 
-            fetch('register_user.php', {
+            fetch('../../Web-Technologies/Backend/user-services/register_user.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

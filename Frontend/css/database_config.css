@@ -65,7 +65,7 @@ nav ul li {
 }
 
 .table-container {
-    width: 90%;
+    width: calc(100% - 40px);
     max-width: 1200px;
     margin-top: 80px;
     background: rgba(0, 0, 0, 0.7);
@@ -234,3 +234,5 @@ footer {
         text-align: center;
     }
 }
+
+
