@@ -26,6 +26,13 @@ SET time_zone = "+00:00";
 --
 -- Structură tabel pentru tabel `resources`
 --
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    is_admin ENUM('Yes', 'No') DEFAULT 'No'
+);
 
 CREATE TABLE `resources` (
   `id` int(11) NOT NULL,

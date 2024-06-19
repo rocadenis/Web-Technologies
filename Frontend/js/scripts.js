@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
-    const filterBtn = document.querySelector('.filter-btn');
+    const filterBtn = document.getElementById('filter-btn');
     const filters = document.querySelector('.filters');
 
     function sanitizeInput(input) {
@@ -15,8 +15,20 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
             const email = sanitizeInput(document.getElementById('email').value);
             const password = sanitizeInput(document.getElementById('password').value);
-            // Add logic to handle login
-            console.log(`Email: ${email}, Password: ${password}`);
+
+            fetch('login_user.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `email=${email}&password=${password}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Handle login response
+            })
+            .catch(error => console.error('Error:', error));
         });
     }
 
@@ -26,8 +38,20 @@ document.addEventListener('DOMContentLoaded', function() {
             const name = sanitizeInput(document.getElementById('name').value);
             const email = sanitizeInput(document.getElementById('email').value);
             const password = sanitizeInput(document.getElementById('password').value);
-            // Add logic to handle signup
-            console.log(`Name: ${name}, Email: ${email}, Password: ${password}`);
+
+            fetch('register_user.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `name=${name}&email=${email}&password=${password}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Handle signup response
+            })
+            .catch(error => console.error('Error:', error));
         });
     }
 
