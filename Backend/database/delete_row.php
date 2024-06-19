@@ -1,18 +1,31 @@
 <?php
+header("Content-Type: application/json");
 include 'db_connect.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
-    $id = $conn->real_escape_string($_POST["id"]);
+try {
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
+        $id = filter_var($conn->real_escape_string($_POST["id"]), FILTER_VALIDATE_INT);
 
-    $sql = "DELETE FROM resources WHERE id = $id";
+        if ($id) {
+            $sql = "DELETE FROM resources WHERE id = $id";
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Record deleted successfully";
+            if ($conn->query($sql) === TRUE) {
+                echo json_encode(["message" => "Record deleted successfully"]);
+            } else {
+                http_response_code(500);
+                echo json_encode(["error" => "Error: " . $conn->error]);
+            }
+        } else {
+            http_response_code(400);
+            echo json_encode(["error" => "Invalid input"]);
+        }
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        http_response_code(400);
+        echo json_encode(["error" => "Invalid input"]);
     }
-} else {
-    echo "Error: Invalid input";
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(["error" => $e->getMessage()]);
 }
 
 $conn->close();
