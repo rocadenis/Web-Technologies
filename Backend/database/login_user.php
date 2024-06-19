@@ -1,25 +1,32 @@
 <?php
+header('Content-Type: application/json');
 include 'db_connect.php';
 
-$email = $_POST['email'];
-$password = $_POST['password'];
+// Get data from POST request
+$data = json_decode(file_get_contents("php://input"), true);
 
-$sql = "SELECT id, name, password_hash";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $email);
-$stmt->execute();
-$stmt->bind_result($id, $name, $hashed_password);
-$stmt->fetch();
+if (isset($data['email']) && isset($data['password'])) {
+    $email = $data['email'];
+    $password = $data['password'];
 
-if (password_verify($password, $hashed_password)) {
-    session_start();
-    $_SESSION['user_id'] = $id;
-    $_SESSION['name'] = $name;
-    echo "Login successful!";
+    // Prepare and bind
+    $stmt = $conn->prepare("SELECT password_hash FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($password_hash);
+    $stmt->fetch();
+
+    if ($stmt->num_rows > 0 && password_verify($password, $password_hash)) {
+        echo json_encode(["success" => true, "message" => "Login successful."]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Invalid email or password."]);
+    }
+
+    $stmt->close();
 } else {
-    echo "Invalid email or password!";
+    echo json_encode(["success" => false, "message" => "Invalid input. Data received: " . json_encode($data)]);
 }
 
-$stmt->close();
 $conn->close();
 ?>

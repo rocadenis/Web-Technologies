@@ -1,34 +1,40 @@
 <?php
-header("Content-Type: application/json");
+header('Content-Type: application/json');
 include 'db_connect.php';
 
-try {
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["password"])) {
-        $name = filter_var($conn->real_escape_string($_POST["name"]), FILTER_SANITIZE_STRING);
-        $email = filter_var($conn->real_escape_string($_POST["email"]), FILTER_VALIDATE_EMAIL);
-        $password = password_hash($conn->real_escape_string($_POST["password"]), PASSWORD_DEFAULT);
-        $is_admin = 'No'; // Default for regular users
+// Get data from POST request
+$data = json_decode(file_get_contents("php://input"), true);
 
-        if ($name && $email && $password) {
-            $sql = "INSERT INTO users (name, email, password_hash, is_admin) VALUES ('$name', '$email', '$password', '$is_admin')";
+if (isset($data['name']) && isset($data['email']) && isset($data['password'])) {
+    $name = $data['name'];
+    $email = $data['email'];
+    $password = $data['password'];
+    $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-            if ($conn->query($sql) === TRUE) {
-                echo json_encode(["message" => "Registration successful!"]);
-            } else {
-                http_response_code(500);
-                echo json_encode(["error" => "Error executing query: " . $conn->error]);
-            }
-        } else {
-            http_response_code(400);
-            echo json_encode(["error" => "Invalid input"]);
-        }
+    // Check if the email already exists
+    $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        echo json_encode(["success" => false, "message" => "Email already registered."]);
+        $stmt->close();
     } else {
-        http_response_code(400);
-        echo json_encode(["error" => "Invalid input"]);
+        // Insert the new user
+        $stmt->close();
+        $stmt = $conn->prepare("INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $name, $email, $password_hash);
+
+        if ($stmt->execute()) {
+            echo json_encode(["success" => true, "message" => "User registered successfully."]);
+        } else {
+            echo json_encode(["success" => false, "message" => "Error: " . $stmt->error]);
+        }
+        $stmt->close();
     }
-} catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(["error" => $e->getMessage()]);
+} else {
+    echo json_encode(["success" => false, "message" => "Invalid input. Data received: " . json_encode($data)]);
 }
 
 $conn->close();

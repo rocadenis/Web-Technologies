@@ -1,67 +1,63 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const loginForm = document.getElementById('login-form');
-    const signupForm = document.getElementById('signup-form');
-    const filterBtn = document.getElementById('filter-btn');
-    const filters = document.querySelector('.filters');
+    const signupForm = document.getElementById('signupForm');
+    const loginForm = document.getElementById('loginForm');
 
-    function sanitizeInput(input) {
-        const div = document.createElement('div');
-        div.textContent = input;
-        return div.innerHTML;
+    if (signupForm) {
+        signupForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+
+            console.log({name, email, password}); // Log data being sent
+
+            fetch('../../Web-Technologies/Backend/database/register_user.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name, email, password})
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                alert(data.message);
+            })
+            .catch(error => console.error('Error:', error));
+        });
     }
 
     if (loginForm) {
         loginForm.addEventListener('submit', function(event) {
             event.preventDefault();
-            const email = sanitizeInput(document.getElementById('email').value);
-            const password = sanitizeInput(document.getElementById('password').value);
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
 
-            fetch('login_user.php', {
+            console.log({email, password}); // Log data being sent
+
+            fetch('../../Web-Technologies/Backend/database/login_user.php', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 },
-                body: `email=${email}&password=${password}`
+                body: JSON.stringify({email, password})
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 console.log(data);
-                // Handle login response
+                alert(data.message);
             })
             .catch(error => console.error('Error:', error));
-        });
-    }
-
-    if (signupForm) {
-        signupForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const name = sanitizeInput(document.getElementById('name').value);
-            const email = sanitizeInput(document.getElementById('email').value);
-            const password = sanitizeInput(document.getElementById('password').value);
-
-            fetch('register_user.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `name=${name}&email=${email}&password=${password}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                // Handle signup response
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    }
-
-    if (filterBtn) {
-        filterBtn.addEventListener('click', function() {
-            if (filters.classList.contains('show')) {
-                filters.classList.remove('show');
-            } else {
-                filters.classList.add('show');
-            }
         });
     }
 });
