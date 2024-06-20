@@ -1,6 +1,5 @@
 <?php
-include 'db_connect.php';
-
+include '../../db_connect.php';
 header('Content-Type: application/json');
 
 // Extrage propoziția din cerere
@@ -55,16 +54,26 @@ if (!empty($type)) {
     $sql .= " AND type LIKE '%$type%'";
 }
 
-$result = $conn->query($sql);
-$data = [];
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
+try {
+    $result = $conn->query($sql);
+    if (!$result) {
+        throw new Exception("Database Error [{$conn->errno}] {$conn->error}");
     }
-}
 
-echo json_encode($data);
+    $data = [];
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+    } else {
+        $data = ["message" => "No results found."];
+    }
+
+    echo json_encode($data);
+} catch (Exception $e) {
+    echo json_encode(["error" => $e->getMessage()]);
+}
 
 $conn->close();
 ?>

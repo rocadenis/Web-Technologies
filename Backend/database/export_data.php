@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: application/json");
-include 'db_connect.php';
+include '../../db_connect.php';
 
 try {
     $type = filter_var($_GET['type'] ?? 'csv', FILTER_SANITIZE_STRING);

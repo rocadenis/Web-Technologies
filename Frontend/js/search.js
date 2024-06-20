@@ -1,10 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('search-btn').addEventListener('click', function() {
         const query = document.getElementById('search-input').value.trim();
+        console.log('Query:', query); // Log the query
+
         if (query.length > 0) {
-            fetch(`../Backend/search_services/search.php?query=${encodeURIComponent(query)}`)
-                .then(response => response.json())
+            fetch(`../backend/search_services/search.php?query=${encodeURIComponent(query)}`)
+                .then(response => {
+                    console.log('Response status:', response.status); // Log response status
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then(data => {
+                    console.log('Data received:', data); // Log the received data
                     const resultsContainer = document.getElementById('search-results');
                     resultsContainer.innerHTML = '';
 

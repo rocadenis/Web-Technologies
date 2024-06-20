@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: application/json");
-include 'db_connect.php';
+include '../../db_connect.php';
 
 try {
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["name"]) && isset($_POST["url"]) && isset($_POST["description"]) && isset($_POST["language"]) && isset($_POST["type"])) {
