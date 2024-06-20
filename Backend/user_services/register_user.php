@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include 'db_connect.php';
+include '../database/db_connect.php';
 
 // Get data from POST request
 $data = json_decode(file_get_contents("php://input"), true);

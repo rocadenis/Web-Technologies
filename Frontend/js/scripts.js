@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log({name, email, password}); // Log data being sent
 
-            fetch('../../Web-Technologies/Backend/user_services/register_user.php', {
+            fetch('../Backend/user_services/register_user.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log({email, password}); // Log data being sent
 
-            fetch('../../Web-Technologies/Backend/user_services/login_user.php', {
+            fetch('../Backend/user_services/login_user.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
