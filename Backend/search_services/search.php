@@ -2,7 +2,6 @@
 include '../../db_connect.php';
 header('Content-Type: application/json');
 
-// Extrage propoziția din cerere
 $sentence = isset($_GET['query']) ? $_GET['query'] : '';
 
 if (empty($sentence)) {
@@ -10,11 +9,9 @@ if (empty($sentence)) {
     exit;
 }
 
-// Funcție pentru a procesa propoziția
 function processQuery($sentence) {
     $keywords = [];
 
-    // Cuvinte cheie pentru fiecare limbaj
     $languages = ['JavaScript', 'Node.js', 'C++', 'C', 'C#', 'Python'];
     foreach ($languages as $language) {
         if (stripos($sentence, $language) !== false) {
@@ -23,7 +20,6 @@ function processQuery($sentence) {
         }
     }
 
-    // Cuvinte cheie pentru tipuri
     if (stripos($sentence, 'tutorial') !== false) {
         $keywords['type'] = 'tutorial';
     } elseif (stripos($sentence, 'source code') !== false) {
@@ -45,7 +41,6 @@ if (empty($keywords)) {
 $language = isset($keywords['language']) ? $keywords['language'] : '';
 $type = isset($keywords['type']) ? $keywords['type'] : '';
 
-// Construiește interogarea SQL pe baza cuvintelor cheie
 $sql = "SELECT * FROM resources WHERE 1=1";
 if (!empty($language)) {
     $sql .= " AND language LIKE '%$language%'";
