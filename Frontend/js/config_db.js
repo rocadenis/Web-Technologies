@@ -1,47 +1,58 @@
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
     loadTableData();
 
-    $('#add-row-form').submit(function(event) {
+    document.getElementById('add-row-form').addEventListener('submit', function(event) {
         event.preventDefault();
-        $.ajax({
-            url: '../../Web-Technologies/Backend/database/add_row.php',
-            type: 'POST',
-            data: $(this).serialize(),
-            success: function(response) {
-                alert('New record created successfully');
-                loadTableData();
-            },
-            error: function(xhr, status, error) {
-                console.error('Error:', xhr.responseText);
-            }
-        });
+        const formData = new FormData(this);
+        fetch('../../Web-Technologies/Backend/database/add_row.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message || 'New record created successfully');
+            loadTableData();
+        })
+        .catch(error => console.error('Error:', error));
+        loadTableData();  
     });
 
     document.getElementById('import-csv').addEventListener('click', function() {
+        document.getElementById('file-input').setAttribute('data-type', 'csv');
         document.getElementById('file-input').click();
-        document.getElementById('file-input').dataset.type = 'csv';
     });
 
     document.getElementById('import-json').addEventListener('click', function() {
+        document.getElementById('file-input').setAttribute('data-type', 'json');
         document.getElementById('file-input').click();
-        document.getElementById('file-input').dataset.type = 'json';
     });
 
     document.getElementById('file-input').addEventListener('change', function(event) {
-        const fileType = event.target.dataset.type;
-        const file = event.target.files[0];
+        const fileType = this.getAttribute('data-type');
+        const file = this.files[0];
         if (file) {
             const formData = new FormData();
             formData.append('file', file);
             formData.append('type', fileType);
-            
+
             fetch('../../Web-Technologies/Backend/database/import_data.php', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.text())
-            .then(data => alert(data))
-            .catch(error => console.error('Error:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                } else if (data.error) {
+                    alert(data.error);
+                }
+                loadTableData();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while importing data.');
+                loadTableData();  
+            });
         }
     });
 
@@ -55,44 +66,61 @@ $(document).ready(function() {
 });
 
 function loadTableData() {
-    $.ajax({
-        url: '../../Web-Technologies/Backend/database/get_rows.php',
-        type: 'GET',
-        success: function(data) {
-            $('#database-table tbody').html(data);
-        },
-        error: function(xhr, status, error) {
-            console.error('Error:', xhr.responseText);
-        }
-    });
+    fetch('../../Web-Technologies/Backend/database/get_rows.php')
+    .then(response => response.text())
+    .then(data => {
+        document.querySelector('#database-table tbody').innerHTML = data;
+        loadTableData();  
+    })
+    .catch(error => console.error('Error:', error));
+    loadTableData();  
 }
 
 function saveToDatabase(editableObj, column, id) {
-    $.ajax({
-        url: '../../Web-Technologies/Backend/database/save_edit.php',
-        type: 'POST',
-        data: 'column=' + column + '&editval=' + editableObj.innerText + '&id=' + id,
-        success: function(response) {
-            console.log('Save successfully');
+    const newValue = editableObj.innerText;
+    fetch('../../Web-Technologies/Backend/database/save_edit.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
         },
-        error: function(xhr, status, error) {
-            console.error('Error:', xhr.responseText);
+        body: new URLSearchParams({
+            'id': id,
+            'column': column,
+            'editval': newValue
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            console.log('Save successfully');
+            loadTableData();  
+        } else if (data.error) {
+            console.error('Error:', data.error);
+            loadTableData();  
         }
-    });
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 function deleteRow(id) {
     if (confirm('Are you sure you want to delete this row?')) {
-        $.ajax({
-            url: '../../Web-Technologies/Backend/database/delete_row.php',
-            type: 'POST',
-            data: 'id=' + id,
-            success: function(response) {
-                loadTableData();
+        fetch('../../Web-Technologies/Backend/database/delete_row.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
             },
-            error: function(xhr, status, error) {
-                console.error('Error:', xhr.responseText);
+            body: new URLSearchParams({
+                'id': id
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                loadTableData();  // Refresh the rows after deletion
+            } else if (data.error) {
+                console.error('Error:', data.error);
             }
-        });
+        })
+        .catch(error => console.error('Error:', error));
     }
 }

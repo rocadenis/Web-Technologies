@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Database Management - Resource Finder</title>
     <link rel="stylesheet" href="css/database_config.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/config_db.js"></script>
 </head>
 <body>
     <header>
@@ -29,6 +29,8 @@
                         <th>Name</th>
                         <th>URL</th>
                         <th>Description</th>
+                        <th>Language</th>
+                        <th>Type</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -40,23 +42,22 @@
                     <input type="text" name="name" placeholder="Name" autocomplete="name" required>
                     <input type="text" name="url" placeholder="URL" autocomplete="url" required>
                     <input type="text" name="description" placeholder="Description" autocomplete="off" required>
+                    <input type="text" name="language" placeholder="Language" autocomplete="off" required>
+                    <input type="text" name="type" placeholder="Type" autocomplete="off" required>
                     <button type="submit" class="btn">Add Row</button>
                 </form>
             </div>
             <div class="io-buttons">
-
-<button class="io-button" id="import-csv">Import CSV</button>
-<button class="io-button" id="import-json">Import JSON</button>
-<input type="file" id="file-input" style="display:none;">
-<button class="io-button" id="export-csv">Export as CSV</button>
-<button class="io-button" id="export-json">Export as JSON</button>
-
+                <button class="io-button" id="import-csv">Import CSV</button>
+                <button class="io-button" id="import-json">Import JSON</button>
+                <input type="file" id="file-input" style="display:none;">
+                <button class="io-button" id="export-csv">Export as CSV</button>
+                <button class="io-button" id="export-json">Export as JSON</button>
             </div>
         </div>
     </main>
     <footer>
         <p>&copy; 2024 Resource Finder</p>
     </footer>
-    <script src =  "js/config_db.js"></script>
 </body>
 </html>

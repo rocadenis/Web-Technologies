@@ -10,12 +10,11 @@ try {
 
         if ($id && $column && $editval) {
             $sql = "UPDATE resources SET $column = '$editval' WHERE id = $id";
-
             if ($conn->query($sql) === TRUE) {
                 echo json_encode(["message" => "Record updated successfully"]);
             } else {
                 http_response_code(500);
-                echo json_encode(["error" => "Error: " . $conn->error]);
+                echo json_encode(["error" => "Error executing query: " . $sql . " - " . $conn->error]);
             }
         } else {
             http_response_code(400);
