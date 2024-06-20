@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
             loadTableData();
         })
         .catch(error => console.error('Error:', error));
-        loadTableData();  
     });
 
     document.getElementById('import-csv').addEventListener('click', function() {
@@ -51,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('Error:', error);
                 alert('An error occurred while importing data.');
-                loadTableData();  
             });
         }
     });
@@ -67,13 +65,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function loadTableData() {
     fetch('../../Web-Technologies/Backend/database/get_rows.php')
-    .then(response => response.text())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
+    })
     .then(data => {
         document.querySelector('#database-table tbody').innerHTML = data;
-        loadTableData();  
     })
     .catch(error => console.error('Error:', error));
-    loadTableData();  
 }
 
 function saveToDatabase(editableObj, column, id) {
@@ -93,10 +94,8 @@ function saveToDatabase(editableObj, column, id) {
     .then(data => {
         if (data.message) {
             console.log('Save successfully');
-            loadTableData();  
         } else if (data.error) {
             console.error('Error:', data.error);
-            loadTableData();  
         }
     })
     .catch(error => console.error('Error:', error));
