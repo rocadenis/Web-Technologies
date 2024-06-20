@@ -1,10 +1,11 @@
 <?php
+header("Content-Type: application/json");
 include 'db_connect.php';
 
 try {
     $type = filter_var($_GET['type'] ?? 'csv', FILTER_SANITIZE_STRING);
     $data = [];
-    $sql = "SELECT name, url, description FROM resources";
+    $sql = "SELECT id, name, url, description FROM resources";
     $result = $conn->query($sql);
 
     while ($row = $result->fetch_assoc()) {
@@ -18,7 +19,7 @@ try {
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment; filename="data.csv"');
         $output = fopen('php://output', 'w');
-        fputcsv($output, ['Name', 'URL', 'Description']);
+        fputcsv($output, ['ID', 'Name', 'URL', 'Description']);
         foreach ($data as $row) {
             fputcsv($output, $row);
         }
