@@ -1,50 +1,49 @@
 document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('.search-btn').addEventListener('click', function() {
-        performSearch();
-    });
-});
+    document.getElementById('search-btn').addEventListener('click', function() {
+        const query = document.getElementById('search-input').value.trim();
+        if (query.length > 0) {
+            fetch(`../Backend/search_services/search.php?query=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsContainer = document.getElementById('search-results');
+                    resultsContainer.innerHTML = '';
 
-function performSearch() {
-    const searchTerm = document.querySelector('.search-input').value.trim();
-    const programmingLanguages = ["C++", "JavaScript", "Swift", "Rust", "Kotlin", "HTML5", "TypeScript", "Clojure", "GLSL", "HLSL", "WGSL", "MSL", "CUDA", "Python", "Java"];
-    let language = "";
-
-    // Check if the search term contains any programming language
-    programmingLanguages.forEach(lang => {
-        if (searchTerm.toLowerCase().includes(lang.toLowerCase())) {
-            language = lang;
+                    if (data.error) {
+                        resultsContainer.innerHTML = `<p>${data.error}</p>`;
+                    } else if (data.length === 0) {
+                        resultsContainer.innerHTML = '<p>No results found.</p>';
+                    } else {
+                        const table = document.createElement('table');
+                        table.innerHTML = `
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>URL</th>
+                                    <th>Description</th>
+                                    <th>Language</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.map(row => `
+                                    <tr>
+                                        <td>${row.id}</td>
+                                        <td>${row.name}</td>
+                                        <td><a href="${row.url}" target="_blank">${row.url}</a></td>
+                                        <td>${row.description}</td>
+                                        <td>${row.language}</td>
+                                        <td>${row.type}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        `;
+                        resultsContainer.appendChild(table);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        } else {
+            alert('Please enter a query.');
         }
     });
-
-    if (!searchTerm) {
-        displayResults([]);
-        return;
-    }
-
-    fetch(`../backend/services/search_resources.php?q=${encodeURIComponent(searchTerm)}&language=${encodeURIComponent(language)}`)
-        .then(response => response.json())
-        .then(data => displayResults(data))
-        .catch(error => console.error('Error:', error));
-}
-
-function displayResults(data) {
-    const resultsContainer = document.getElementById('results');
-    resultsContainer.innerHTML = '';
-
-    if (data.length > 0) {
-        data.forEach(resource => {
-            const resourceDiv = document.createElement('div');
-            resourceDiv.className = 'resource';
-
-            resourceDiv.innerHTML = `
-                <h3>${resource.name}</h3>
-                <p><a href="${resource.url}" target="_blank">${resource.url}</a></p>
-                <p>${resource.description}</p>
-            `;
-
-            resultsContainer.appendChild(resourceDiv);
-        });
-    } else {
-        resultsContainer.innerHTML = '<p>No results found.</p>';
-    }
-}
+});

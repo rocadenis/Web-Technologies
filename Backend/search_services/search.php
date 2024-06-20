@@ -1,0 +1,70 @@
+<?php
+include 'db_connect.php';
+
+header('Content-Type: application/json');
+
+// Extrage propoziția din cerere
+$sentence = isset($_GET['query']) ? $_GET['query'] : '';
+
+if (empty($sentence)) {
+    echo json_encode(["error" => "Query is empty"]);
+    exit;
+}
+
+// Funcție pentru a procesa propoziția
+function processQuery($sentence) {
+    $keywords = [];
+
+    // Cuvinte cheie pentru fiecare limbaj
+    $languages = ['JavaScript', 'Node.js', 'C++', 'C', 'C#', 'Python'];
+    foreach ($languages as $language) {
+        if (stripos($sentence, $language) !== false) {
+            $keywords['language'] = $language;
+            break;
+        }
+    }
+
+    // Cuvinte cheie pentru tipuri
+    if (stripos($sentence, 'tutorial') !== false) {
+        $keywords['type'] = 'tutorial';
+    } elseif (stripos($sentence, 'source code') !== false) {
+        $keywords['type'] = 'source code';
+    } elseif (stripos($sentence, 'site') !== false) {
+        $keywords['type'] = 'site';
+    }
+
+    return $keywords;
+}
+
+$keywords = processQuery($sentence);
+
+if (empty($keywords)) {
+    echo json_encode(["error" => "No keywords found in query"]);
+    exit;
+}
+
+$language = isset($keywords['language']) ? $keywords['language'] : '';
+$type = isset($keywords['type']) ? $keywords['type'] : '';
+
+// Construiește interogarea SQL pe baza cuvintelor cheie
+$sql = "SELECT * FROM resources WHERE 1=1";
+if (!empty($language)) {
+    $sql .= " AND language LIKE '%$language%'";
+}
+if (!empty($type)) {
+    $sql .= " AND type LIKE '%$type%'";
+}
+
+$result = $conn->query($sql);
+$data = [];
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+}
+
+echo json_encode($data);
+
+$conn->close();
+?>

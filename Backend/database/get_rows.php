@@ -1,6 +1,7 @@
 <?php
 header("Content-Type: text/html; charset=UTF-8");
-include 'db_connect.php';
+include '../../db_connect.php';
+
 
 try {
     $sql = "SELECT * FROM resources";
