@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const query = document.getElementById('search-input').value.trim();
 
         if (query.length > 0) {
-            fetch(`../backend/search_services/search.php?query=${encodeURIComponent(query)}`)
+            fetch(`/ResourceFi/Web-Technologies/Backend/search_services/search.php?query=${encodeURIComponent(query)}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');

@@ -1,9 +1,10 @@
 <?php
-session_start(); // Start the session at the beginning of the script
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 header('Content-Type: application/json');
-include '../database/db_connect.php';
-
+require_once __DIR__ . '/../database/db_connect.php';
 // Get data from POST request
 $data = json_decode(file_get_contents("php://input"), true);
 

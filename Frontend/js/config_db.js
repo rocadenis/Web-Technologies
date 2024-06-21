@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('add-row-form').addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(this);
-        fetch('../../Web-Technologies/Backend/database/add_row.php', {
+        fetch('/ResourceFi/Web-Technologies/Backend/database/add_row.php', {
             method: 'POST',
             body: formData
         })
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('file', file);
             formData.append('type', fileType);
 
-            fetch('../../Web-Technologies/Backend/database/import_data.php', {
+            fetch('/ResourceFi/Web-Technologies/Backend/database/import_data.php', {
                 method: 'POST',
                 body: formData
             })
@@ -55,16 +55,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('export-csv').addEventListener('click', function() {
-        window.location.href = '../../Web-Technologies/Backend/database/export_data.php?type=csv';
+        window.location.href = '/ResourceFi/Web-Technologies/Backend/database/export_data.php?type=csv';
     });
 
     document.getElementById('export-json').addEventListener('click', function() {
-        window.location.href = '../../Web-Technologies/Backend/database/export_data.php?type=json';
+        window.location.href = '/ResourceFi/Web-Technologies/Backend/database/export_data.php?type=json';
     });
 });
 
 function loadTableData() {
-    fetch('../../Web-Technologies/Backend/database/get_rows.php')
+    fetch('/ResourceFi/Web-Technologies/Backend/database/get_rows.php')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -79,7 +79,7 @@ function loadTableData() {
 
 function saveToDatabase(editableObj, column, id) {
     const newValue = editableObj.innerText;
-    fetch('../../Web-Technologies/Backend/database/save_edit.php', {
+    fetch('/ResourceFi/Web-Technologies/Backend/database/save_edit.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -103,7 +103,7 @@ function saveToDatabase(editableObj, column, id) {
 
 function deleteRow(id) {
     if (confirm('Are you sure you want to delete this row?')) {
-        fetch('../../Web-Technologies/Backend/database/delete_row.php', {
+        fetch('/ResourceFi/Web-Technologies/Backend/database/delete_row.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

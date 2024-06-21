@@ -1,5 +1,5 @@
 <?php
-include '../database/db_connect.php';
+require_once __DIR__ . '/../database/db_connect.php';
 header('Content-Type: application/json');
 
 $query = isset($_GET['query']) ? $_GET['query'] : '';

@@ -1,14 +1,18 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 header('Content-Type: application/json');
-include '../database/db_connect.php';
+require_once __DIR__ . '/../database/db_connect.php';
 
 // Get data from POST request
-$data = json_decode(file_get_contents("php://input"), true);
+$input = json_decode(file_get_contents("php://input"), true);
 
-if (isset($data['name']) && isset($data['email']) && isset($data['password'])) {
-    $name = $data['name'];
-    $email = $data['email'];
-    $password = $data['password'];
+if (isset($input['name']) && isset($input['email']) && isset($input['password'])) {
+    $name = $input['name'];
+    $email = $input['email'];
+    $password = $input['password'];
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
     // Check if the email already exists
@@ -34,7 +38,7 @@ if (isset($data['name']) && isset($data['email']) && isset($data['password'])) {
         $stmt->close();
     }
 } else {
-    echo json_encode(["success" => false, "message" => "Invalid input. Data received: " . json_encode($data)]);
+    echo json_encode(["success" => false, "message" => "Invalid input. Data received: " . json_encode($input)]);
 }
 
 $conn->close();

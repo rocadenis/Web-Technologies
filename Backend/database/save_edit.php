@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: application/json");
-include '../../db_connect.php';
+include 'db_connect.php';
 
 try {
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && isset($_POST["column"]) && isset($_POST["editval"])) {

@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log({name, email, password}); // Log data being sent
 
-            fetch('../Backend/user_services/register_user.php', {
+            fetch('/ResourceFi/Web-Technologies/Backend/user_services/register_user.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
 
-            fetch('../Backend/user_services/login_user.php', {
+            fetch('/ResourceFi/Web-Technologies/Backend/user_services/login_user.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
         logoutButton.addEventListener('click', function(event) {
             event.preventDefault();  // Prevent the default anchor behavior
 
-            fetch('../Backend/user_services/logout_user.php', { 
+            fetch('/ResourceFi/Web-Technologies/Backend/user_services/logout_user.php', { 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
