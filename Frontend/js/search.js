@@ -1,25 +1,26 @@
+// js/search.js
+
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('search-btn').addEventListener('click', function() {
         const query = document.getElementById('search-input').value.trim();
-        console.log('Query:', query); // Log the query
 
         if (query.length > 0) {
             fetch(`../backend/search_services/search.php?query=${encodeURIComponent(query)}`)
                 .then(response => {
-                    console.log('Response status:', response.status); // Log response status
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
                     return response.json();
                 })
                 .then(data => {
-                    console.log('Data received:', data); // Log the received data
                     const resultsContainer = document.getElementById('search-results');
                     resultsContainer.innerHTML = '';
 
+                    console.log('Data received:', data); // Log the received data
+
                     if (data.error) {
                         resultsContainer.innerHTML = `<p>${data.error}</p>`;
-                    } else if (data.length === 0) {
+                    } else if (!Array.isArray(data) || data.length === 0) {
                         resultsContainer.innerHTML = '<p>No results found.</p>';
                     } else {
                         const table = document.createElement('table');

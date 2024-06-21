@@ -1,53 +1,65 @@
 <?php
-include '../../db_connect.php';
+include '../database/db_connect.php';
 header('Content-Type: application/json');
 
-$sentence = isset($_GET['query']) ? $_GET['query'] : '';
+$query = isset($_GET['query']) ? $_GET['query'] : '';
 
-if (empty($sentence)) {
+if (empty($query)) {
     echo json_encode(["error" => "Query is empty"]);
     exit;
 }
 
-function processQuery($sentence) {
-    $keywords = [];
+// Funcția de procesare a cuvintelor
+function processWords($sentence) {
+    $stopWords = ['a', 'an', 'and', 'are', 'as', 'at', 'be', 'but', 'by', 'for', 'if', 'in', 'into', 'is', 'it', 'no', 'not', 'of', 'on', 'or', 'such', 'that', 'the', 'their', 'then', 'there', 'these', 'they', 'this', 'to', 'was', 'will', 'with'];
+    $synonyms = [
+        'js' => 'javascript',
+        'py' => 'python',
+        'cpp' => 'c++',
+        'csharp' => 'c#',
+        'tutorial' => 'guide',
+        'code' => 'source code',
+        'website' => 'site',
+    ];
 
-    $languages = ['JavaScript', 'Node.js', 'C++', 'C', 'C#', 'Python'];
-    foreach ($languages as $language) {
-        if (stripos($sentence, $language) !== false) {
-            $keywords['language'] = $language;
-            break;
+    // Conversie la minuscule și despărțirea în cuvinte
+    $words = explode(' ', strtolower($sentence));
+    $filteredWords = array_diff($words, $stopWords);
+    
+    // Înlocuirea sinonimelor
+    foreach ($filteredWords as &$word) {
+        if (isset($synonyms[$word])) {
+            $word = $synonyms[$word];
         }
     }
-
-    if (stripos($sentence, 'tutorial') !== false) {
-        $keywords['type'] = 'tutorial';
-    } elseif (stripos($sentence, 'source code') !== false) {
-        $keywords['type'] = 'source code';
-    } elseif (stripos($sentence, 'site') !== false) {
-        $keywords['type'] = 'site';
-    }
-
-    return $keywords;
+    
+    return array_values($filteredWords);
 }
 
-$keywords = processQuery($sentence);
+$words = processWords($query);
 
-if (empty($keywords)) {
-    echo json_encode(["error" => "No keywords found in query"]);
+if (count($words) < 2) {
+    echo json_encode(["error" => "Please enter at least two meaningful words for the search."]);
     exit;
 }
 
-$language = isset($keywords['language']) ? $keywords['language'] : '';
-$type = isset($keywords['type']) ? $keywords['type'] : '';
-
-$sql = "SELECT * FROM resources WHERE 1=1";
-if (!empty($language)) {
-    $sql .= " AND language LIKE '%$language%'";
+// Construirea interogării SQL dinamice
+$sql = "SELECT *, 
+        (";
+foreach ($words as $index => $word) {
+    $word = $conn->real_escape_string($word); // Escapare pentru siguranță
+    if ($index > 0) {
+        $sql .= " + ";
+    }
+    $sql .= "(CASE WHEN name LIKE '%$word%' THEN 1 ELSE 0 END 
+            + CASE WHEN description LIKE '%$word%' THEN 1 ELSE 0 END 
+            + CASE WHEN language LIKE '%$word%' THEN 1 ELSE 0 END 
+            + CASE WHEN type LIKE '%$word%' THEN 1 ELSE 0 END)";
 }
-if (!empty($type)) {
-    $sql .= " AND type LIKE '%$type%'";
-}
+$sql .= ") AS match_count 
+         FROM resources 
+         HAVING match_count >= 2
+         ORDER BY match_count DESC";
 
 try {
     $result = $conn->query($sql);
