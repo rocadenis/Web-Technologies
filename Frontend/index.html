@@ -1,7 +1,3 @@
-<?php
-session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,14 +11,8 @@ session_start();
         <div class="container">
             <h1>Resource Finder</h1>
             <nav>
-                <ul>
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <li><a href="admin" class="btn nav-btn">Settings</a></li>
-                        <li><a href="#" id="logoutButton" class="btn nav-btn">Logout</a></li>
-                    <?php else: ?>
-                        <li><a href="login" class="btn nav-btn">Log in</a></li>
-                        <li><a href="signup" class="btn nav-btn">Sign up</a></li>
-                    <?php endif; ?>
+                <ul id="nav-links">
+                    <!-- Links will be dynamically added by JavaScript -->
                 </ul>
             </nav>
         </div>
@@ -42,6 +32,7 @@ session_start();
         <p>&copy; 2024 Resource Finder</p>
     </footer>
     <script src="/ResourceFi/Web-Technologies/Frontend/js/search.js"></script>
+    <script src="/ResourceFi/Web-Technologies/Frontend/js/header.js"></script>
     <script src="/ResourceFi/Web-Technologies/Frontend/js/scripts.js"></script>
 </body>
 </html>

@@ -6,7 +6,7 @@ RewriteBase /ResourceFi/Web-Technologies
 RewriteCond %{REQUEST_URI} !^/ResourceFi/Web-Technologies/(css|js|images)/ [NC]
 
 # Rewrite rules for shortened URLs
-RewriteRule ^home$ Frontend/index.php [L]
+RewriteRule ^home$ Frontend/index.html [L]
 RewriteRule ^login$ Frontend/login.html [L]
 RewriteRule ^signup$ Frontend/signup.html [L]
 RewriteRule ^admin$ Frontend/admin.html [L]
@@ -15,5 +15,5 @@ RewriteRule ^config$ Frontend/config_database.html [L]
 # Handle all other requests with index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ Frontend/index.php [QSA,L]
+RewriteRule ^ Backend/index.php [QSA,L]
 
