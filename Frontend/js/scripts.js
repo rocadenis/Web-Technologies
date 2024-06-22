@@ -28,6 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 console.log(data);
                 alert(data.message);
+                if (data.success) {
+                    window.location.href = 'login'; 
+                }
             })
             .catch(error => console.error('Error:', error));
         });
@@ -54,10 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 if (data.success) {
-                    // Redirect to 'index.html' after successful login
-                    window.location.href = 'logged_in_index.html';
+                    window.location.href = 'home';
                 } else {
-                    // Display error message within the form
                     const errorMsg = document.getElementById('loginError');
                     errorMsg.textContent = data.message;
                     errorMsg.style.display = 'block';
@@ -74,9 +75,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (logoutButton) {
         logoutButton.addEventListener('click', function(event) {
-            event.preventDefault();  // Prevent the default anchor behavior
+            event.preventDefault();
 
-            fetch('/ResourceFi/Web-Technologies/Backend/user_services/logout_user.php', { 
+            fetch('/ResourceFi/Web-Technologies/Backend/user_services/logout_user.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -90,17 +91,15 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 if (data.success) {
-                    // Redirect to 'index.html' or any public page after successful logout
-                    window.location.href = 'index.html';
+                    window.location.href = 'home';
                 } else {
-                    // Optionally handle errors or display a message
                     console.error('Logout failed:', data.message);
-                    alert('Failed to log out. Please try again.'); // Use a more integrated UI message in production
+                    alert('Failed to log out. Please try again.');
                 }
             })
             .catch(error => {
                 console.error('Error during logout:', error);
-                alert('Error logging out.'); // Use a more integrated UI message in production
+                alert('Error logging out.');
             });
         });
     }
