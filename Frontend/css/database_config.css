@@ -8,7 +8,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
 }
 
 .container {
@@ -39,7 +38,7 @@ nav ul {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
+   
 }
 
 nav ul li {
@@ -59,10 +58,11 @@ nav ul li {
     text-decoration: none;
 }
 
-.nav-btn {
+.nav-btn:hover {
     background: #f39c12;
     color: #333;
 }
+
 
 .table-container {
     width: 90%;
@@ -106,6 +106,7 @@ nav ul li {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .actions .btn {
@@ -120,7 +121,7 @@ nav ul li {
     transition: background 0.3s, color 0.3s;
 }
 
-.actions .btn {
+.actions .btn:hover {
     background: #f39c12;
     color: #333;
 }
@@ -139,6 +140,7 @@ footer {
     justify-content: space-between;
     width: 100%;
     margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 #add-row-form input,
@@ -150,7 +152,7 @@ footer {
 }
 
 #add-row-form input {
-    width: 30%;
+    width: calc(30% - 12px);
     color: black;
 }
 
@@ -162,7 +164,7 @@ footer {
     transition: background 0.3s;
 }
 
-#add-row-form button {
+#add-row-form button:hover {
     background: #f39c12;
     color: #333;
 }
@@ -181,7 +183,6 @@ footer {
 
 @media (max-width: 768px) {
     header {
-        width: 100%;
         text-align: center;
     }
 
@@ -189,15 +190,11 @@ footer {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
         padding: 0;
     }
 
     nav ul li {
         margin: 10px 0;
-        width: 100%;
-        display: flex;
-        justify-content: center;
     }
 
     .nav-btn {
@@ -228,9 +225,28 @@ footer {
         margin: 10px 0;
     }
 
+    #add-row-form input {
+        width: 100%;
+    }
+
     footer {
         width: 100%;
         text-align: center;
         position: relative;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-btn {
+        font-size: 0.8em;
+        padding: 8px 15px;
+    }
+
+    .table-container {
+        padding: 10px;
+    }
+
+    .actions .btn {
+        font-size: 0.9em;
     }
 }

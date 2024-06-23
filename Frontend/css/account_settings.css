@@ -77,6 +77,7 @@ nav ul li {
     margin: 100px auto 80px auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     text-decoration: none;
+    margin-left:-90px ;
 }
 
 .form-container h2, .form-container p {
@@ -196,6 +197,7 @@ footer {
         margin-top: 80px;
         margin-bottom: 40px;
         padding: 20px;
+        margin-left: 0px;
     }
 
     .form-container h2, .form-container p {

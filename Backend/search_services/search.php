@@ -9,7 +9,6 @@ if (empty($query)) {
     exit;
 }
 
-// Funcția de procesare a cuvintelor
 function processWords($sentence) {
     $stopWords = ['a', 'an', 'and', 'are', 'as', 'at', 'be', 'but', 'by', 'for', 'if', 'in', 'into', 'is', 'it', 'no', 'not', 'of', 'on', 'or', 'such', 'that', 'the', 'their', 'then', 'there', 'these', 'they', 'this', 'to', 'was', 'will', 'with'];
     $synonyms = [
@@ -17,16 +16,35 @@ function processWords($sentence) {
         'py' => 'python',
         'cpp' => 'c++',
         'csharp' => 'c#',
+        'rb' => 'ruby',
+        'frontend' => 'front-end',
+        'backend' => 'back-end',
+        'html' => 'hypertext markup language',
+        'css' => 'cascading style sheets',
+        'sql' => 'structured query language',
+        'nosql' => 'non-relational database',
+        'ai' => 'artificial intelligence',
+        'ml' => 'machine learning',
+        'ux' => 'user experience',
+        'ui' => 'user interface',
+        'devops' => 'development operations',
+        'api' => 'application programming interface',
+        'tdd' => 'test driven development',
+        'ci/cd' => 'continuous integration continuous deployment',
+        'rest' => 'representational state transfer',
+        'soap' => 'simple object access protocol',
+        'graphql' => 'graph query language',
+        'oop' => 'object oriented programming',
         'tutorial' => 'guide',
+        'tutorials' => 'guide',
         'code' => 'source code',
         'website' => 'site',
+        'orm' => 'object relational mapper'
     ];
 
-    // Conversie la minuscule și despărțirea în cuvinte
     $words = explode(' ', strtolower($sentence));
     $filteredWords = array_diff($words, $stopWords);
     
-    // Înlocuirea sinonimelor
     foreach ($filteredWords as &$word) {
         if (isset($synonyms[$word])) {
             $word = $synonyms[$word];
@@ -43,11 +61,10 @@ if (count($words) < 2) {
     exit;
 }
 
-// Construirea interogării SQL dinamice
 $sql = "SELECT *, 
         (";
 foreach ($words as $index => $word) {
-    $word = $conn->real_escape_string($word); // Escapare pentru siguranță
+    $word = $conn->real_escape_string($word);
     if ($index > 0) {
         $sql .= " + ";
     }
