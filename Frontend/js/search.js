@@ -1,6 +1,17 @@
-// js/search.js
-
 document.addEventListener('DOMContentLoaded', function() {
+
+    function addCSSRule(sheet, selector, rules, index) {
+        if(sheet.insertRule) {
+            sheet.insertRule(`${selector} { ${rules} }`, index);
+        } else if(sheet.addRule) {
+            sheet.addRule(selector, rules, index);
+        }
+    }
+
+    const styleSheet = document.createElement("style");
+    document.head.appendChild(styleSheet);
+    addCSSRule(styleSheet.sheet, '#search-results a', 'color: #f39c12;', 0);
+
     document.getElementById('search-btn').addEventListener('click', function() {
         const query = document.getElementById('search-input').value.trim();
 
@@ -40,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <tr>
                                         <td>${row.id}</td>
                                         <td>${row.name}</td>
-                                        <td><a href="${row.url}" target="_blank">${row.url}</a></td>
+                                        <td><a href="${row.url}" target="_blank" style="color:#f39c12">${row.url}</a></td>
                                         <td>${row.description}</td>
                                         <td>${row.language}</td>
                                         <td>${row.type}</td>
