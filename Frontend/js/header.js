@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (data.authenticated) {
                 navLinks.innerHTML += `<li><a href="admin" class="btn nav-btn">Settings</a></li>`;
-                navLinks.innerHTML += `<li><a href="#" id="logoutButton" class="btn nav-btn">Logout</a></li>`;
+                navLinks.innerHTML += `<li><a href="#" id="logoutButton" class="btn nav-btn">Log out</a></li>`;
                 
                 document.getElementById('logoutButton').addEventListener('click', function(event) {
                     event.preventDefault();
