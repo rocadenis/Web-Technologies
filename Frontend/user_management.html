@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Users</title>
+    <link rel="stylesheet" href="/ResourceFi/Web-Technologies/Frontend/css/user_management.css">
+    <script src="/ResourceFi/Web-Technologies/Frontend/js/user_management.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Resource Finder - Admin</h1>
+            <nav>
+                <ul>
+                    <li><a href="home" class="btn nav-btn">Home</a></li>
+                    <li><a href="admin" class="btn nav-btn">Account Settings</a></li>
+                    <li><a href="login" id="logoutButton" class="btn nav-btn">Log out</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="table-container">
+            <h2>User Management</h2>
+            <table id="user-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Is Admin</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div class="form-container">
+                <form id="add-user-form">
+                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <label>
+                        <input type="checkbox" name="is_admin"> Admin
+                    </label>
+                    <button type="submit" class="btn">Add User</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Resource Finder</p>
+    </footer>
+</body>
+</html>

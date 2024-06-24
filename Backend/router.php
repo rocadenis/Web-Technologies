@@ -8,6 +8,7 @@ require_once __DIR__ . '/../Backend/database/db_connect.php';
 require_once __DIR__ . '/../Backend/user_services/login_user.php';
 require_once __DIR__ . '/../Backend/user_services/logout_user.php';
 require_once __DIR__ . '/../Backend/user_services/register_user.php';
+require_once __DIR__ . '/../Backend/user_services/admin_register_user.php';
 require_once __DIR__ . '/../Backend/search_services/search.php';
 require_once __DIR__ . '/../Backend/database/add_row.php';
 require_once __DIR__ . '/../Backend/database/delete_row.php';
@@ -15,6 +16,8 @@ require_once __DIR__ . '/../Backend/database/export_data.php';
 require_once __DIR__ . '/../Backend/database/get_rows.php';
 require_once __DIR__ . '/../Backend/database/import_data.php';
 require_once __DIR__ . '/../Backend/database/save_edit.php';
+require_once __DIR__ . '/../Backend/user_services/get_users.php';
+require_once __DIR__ . '/../Backend/user_services/toggle_admin.php';
 
 class Router {
     private $routes;
@@ -85,6 +88,11 @@ $router->addRoute('GET', '/^\/config$/', function() {
     exit;
 });
 
+$router->addRoute('GET', '/^\/configusers$/', function() {
+    require_once __DIR__ . '/../Frontend/user_management.html';
+    exit;
+});
+
 // Define routes for user services
 $router->addRoute('POST', '/^\/register$/', function() {
     register();
@@ -128,6 +136,32 @@ $router->addRoute('POST', '/^\/save_edit$/', function() {
 // Define routes for search controller
 $router->addRoute('GET', '/^\/search$/', function() {
     require_once __DIR__ . '/../Backend/search_services/search.php';
+    exit;
+});
+
+// Define routes for user management
+$router->addRoute('GET', '/^\/get_users$/', function() {
+    require_once __DIR__ . '/../Backend/user_services/get_users.php';
+    exit;
+});
+$router->addRoute('POST', '/^\/register_user$/', function() {
+    require_once __DIR__ . '/../Backend/user_services/register_user.php';
+    exit;
+});
+$router->addRoute('POST', '/^\/admin_register_user$/', function() {
+    require_once __DIR__ . '/../Backend/user_services/admin_register_user.php';
+    exit;
+});
+$router->addRoute('POST', '/^\/save_edit_user$/', function() {
+    require_once __DIR__ . '/../Backend/user_services/save_edit.php';
+    exit;
+});
+$router->addRoute('POST', '/^\/delete_user$/', function() {
+    require_once __DIR__ . '/../Backend/user_services/delete_user.php';
+    exit;
+});
+$router->addRoute('POST', '/^\/toggle_admin$/', function() {
+    require_once __DIR__ . '/../Backend/user_services/toggle_admin.php';
     exit;
 });
 

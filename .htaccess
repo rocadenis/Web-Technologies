@@ -11,6 +11,7 @@ RewriteRule ^login$ Frontend/login.html [L]
 RewriteRule ^signup$ Frontend/signup.html [L]
 RewriteRule ^admin$ Frontend/admin.html [L]
 RewriteRule ^config$ Frontend/config_database.html [L]
+RewriteRule ^configusers$ Frontend/user_management.html [L]
 
 # Handle all other requests with index.php
 RewriteCond %{REQUEST_FILENAME} !-f

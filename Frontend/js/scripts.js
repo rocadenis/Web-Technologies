@@ -21,7 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => {
                 if (!response.ok) {
+                    alert('Something is wrong. PLease try again!');
                     throw new Error(`HTTP error! status: ${response.status}`);
+                   
                 }
                 return response.json();
             })
@@ -51,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => {
                 if (!response.ok) {
+                    alert('Something is wrong. PLease try again!');
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
@@ -59,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.success) {
                     window.location.href = 'home';
                 } else {
+                    alert('Something is wrong. PLease try again!');
                     const errorMsg = document.getElementById('loginError');
                     errorMsg.textContent = data.message;
                     errorMsg.style.display = 'block';

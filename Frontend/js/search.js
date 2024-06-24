@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-
     function addCSSRule(sheet, selector, rules, index) {
-        if(sheet.insertRule) {
+        if (sheet.insertRule) {
             sheet.insertRule(`${selector} { ${rules} }`, index);
-        } else if(sheet.addRule) {
+        } else if (sheet.addRule) {
             sheet.addRule(selector, rules, index);
         }
     }
@@ -12,10 +11,17 @@ document.addEventListener('DOMContentLoaded', function() {
     document.head.appendChild(styleSheet);
     addCSSRule(styleSheet.sheet, '#search-results a', 'color: #f39c12;', 0);
 
-    document.getElementById('search-btn').addEventListener('click', function() {
+    const searchBtn = document.getElementById('search-btn');
+    const loadingSpinner = document.getElementById('loading-spinner');
+
+    searchBtn.addEventListener('click', function() {
         const query = document.getElementById('search-input').value.trim();
 
         if (query.length > 0) {
+            const resultsContainer = document.getElementById('search-results');
+            resultsContainer.innerHTML = '';
+            loadingSpinner.style.display = 'block'; // Show loading spinner
+
             fetch(`/ResourceFi/Web-Technologies/Backend/search_services/search.php?query=${encodeURIComponent(query)}`)
                 .then(response => {
                     if (!response.ok) {
@@ -24,14 +30,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     return response.json();
                 })
                 .then(data => {
-                    const resultsContainer = document.getElementById('search-results');
-                    resultsContainer.innerHTML = '';
-
+                    loadingSpinner.style.display = 'none'; // Hide loading spinner
                     console.log('Data received:', data); // Log the received data
 
                     if (data.error) {
                         resultsContainer.innerHTML = `<p>${data.error}</p>`;
-                    } else if (!Array.isArray(data) || data.length === 0) {
+                    } else if (data.message === "No results found.") {
                         resultsContainer.innerHTML = '<p>No results found.</p>';
                     } else {
                         const table = document.createElement('table');
@@ -47,14 +51,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </tr>
                             </thead>
                             <tbody>
-                                ${data.map(row => `
+                                ${Object.keys(data).filter(key => key !== 'openai_summary').map(key => `
                                     <tr>
-                                        <td>${row.id}</td>
-                                        <td>${row.name}</td>
-                                        <td><a href="${row.url}" target="_blank" style="color:#f39c12">${row.url}</a></td>
-                                        <td>${row.description}</td>
-                                        <td>${row.language}</td>
-                                        <td>${row.type}</td>
+                                        <td>${data[key].id}</td>
+                                        <td>${data[key].name}</td>
+                                        <td><a href="${data[key].url}" target="_blank" style="color:#f39c12">${data[key].url}</a></td>
+                                        <td>${data[key].description}</td>
+                                        <td>${data[key].language}</td>
+                                        <td>${data[key].type}</td>
                                     </tr>
                                 `).join('')}
                             </tbody>
@@ -62,7 +66,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         resultsContainer.appendChild(table);
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    loadingSpinner.style.display = 'none'; // Hide loading spinner
+                    console.error('Error:', error);
+                    resultsContainer.innerHTML = `<p>An error occurred: ${error.message}</p>`;
+                });
         } else {
             alert('Please enter a query.');
         }
