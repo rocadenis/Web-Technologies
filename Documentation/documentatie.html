@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Finder Documentation</title>
+    <link rel="stylesheet" href="/ResourceFi/Web-Technologies/Frontend/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Resource Finder Documentation</h1>
+    </header>
+    <main>
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>Welcome to the documentation for the Resource Finder application. This document provides all the necessary information to set up, run, and maintain the application.</p>
+        </section>
+        
+        <section id="technologies">
+            <h2>Technologies Used</h2>
+            <ul>
+                <li>HTML5, CSS3</li>
+                <li>JavaScript (ES6+)</li>
+                <li>PHP 7.4+</li>
+                <li>MySQL</li>
+                <li>XAMPP (Apache, MySQL)</li>
+                <li>JSON</li>
+                <li>AJAX</li>
+                <li>OpenAI API</li>
+            </ul>
+        </section>
+
+        <section id="setup">
+            <h2>Setup</h2>
+            <h3>Server Configuration</h3>
+            <p>Ensure you have XAMPP or a similar server environment installed. Configure Apache to allow URL rewrites and routing by modifying the <code>httpd.conf</code> and <code>httpd-vhosts.conf</code> files.</p>
+            <pre>
+# httpd.conf
+LoadModule rewrite_module modules/mod_rewrite.so
+AllowOverride All
+            <pre>
+# httpd-vhosts.conf
+<VirtualHost *:80>
+    DocumentRoot "C:/path_to_your_project/ResourceFi/Web-Technologies"
+    ServerName resourcefinder.local
+    <pre>
+    And inside the project directory make sure to see these options:
+
+        AllowOverride All
+        Require all granted
+        </section>
+        
+        <section id="database">
+            <h2>Database</h2>
+            <p>The database used is MySQL. The following SQL script creates the necessary tables:</p>
+            <pre>
+CREATE DATABASE ResourceFi;
+USE ResourceFi;
+
+CREATE TABLE resources (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    url VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    language VARCHAR(255) NOT NULL,
+    type VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE users (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE
+);
+            </pre>
+        </section>
+        
+        <section id="api">
+            <h2>API Endpoints</h2>
+            <h3>Authentication</h3>
+            <ul>
+                <li><strong>Login:</strong> <code>/Backend/user_services/login_user.php</code> - Handles user login.</li>
+                <li><strong>Logout:</strong> <code>/Backend/user_services/logout_user.php</code> - Handles user logout.</li>
+                <li><strong>Check Admin:</strong> <code>/Backend/user_services/check_isAdmin.php</code> - Checks if the user is an admin.</li>
+                <li><strong>Register User:</strong> <code>/Backend/user_services/register_user.php</code> - Handles user registration.</li>
+                <li><strong>Change Email:</strong> <code>/Backend/user_services/change_email.php</code> - Handles email change.</li>
+                <li><strong>Change Password:</strong> <code>/Backend/user_services/change_password.php</code> - Handles password change.</li>
+            </ul>
+            <h3>Resource Management</h3>
+            <ul>
+                <li><strong>Add Resource:</strong> <code>/Backend/database/add_row.php</code> - Adds a new resource to the database.</li>
+                <li><strong>Delete Resource:</strong> <code>/Backend/database/delete_row.php</code> - Deletes a resource from the database.</li>
+                <li><strong>Edit Resource:</strong> <code>/Backend/database/save_edit.php</code> - Edits an existing resource.</li>
+                <li><strong>Get Resources:</strong> <code>/Backend/database/get_rows.php</code> - Retrieves resources from the database.</li>
+                <li><strong>Import Data:</strong> <code>/Backend/database/import_data.php</code> - Imports data into the database.</li>
+                <li><strong>Export Data:</strong> <code>/Backend/database/export_data.php</code> - Exports data from the database.</li>
+            </ul>
+            <h3>Search</h3>
+            <ul>
+                <li><strong>Search Resources:</strong> <code>/Backend/search_services/search.php</code> - Searches for resources based on user query using OpenAI API to filter and rank results.</li>
+            </ul>
+        </section>
+        
+        <section id="routes">
+            <h2>Routes</h2>
+            <p>The application uses the following routes:</p>
+            <ul>
+                <li><strong>Home Page:</strong> <code>/home</code> - Renders the home page.</li>
+                <li><strong>Login Page:</strong> <code>/login</code> - Renders the login page.</li>
+                <li><strong>Sign Up Page:</strong> <code>/signup</code> - Renders the signup page.</li>
+                <li><strong>Admin Page:</strong> <code>/admin</code> - Renders the admin settings page.</li>
+                <li><strong>Database Config Page:</strong> <code>/config</code> - Renders the database configuration page (accessible only by admin users).</li>
+            </ul>
+        </section>
+
+        <section id="file-structure">
+            <h2>File Structure</h2>
+            <p>The file structure of the project is organized as follows:</p>
+            <pre>
+ResourceFi/
+│
+├── Web-Technologies/
+│   ├── Backend/
+│   │   ├── database/
+│   │   │   ├── add_row.php
+│   │   │   ├── db_connect.php
+│   │   │   ├── delete_row.php
+│   │   │   ├── export_data.php
+│   │   │   ├── get_rows.php
+│   │   │   ├── import_data.php
+│   │   │   ├── save_edit.php
+│   │   ├── initDB/
+│   │   │   ├── resources.sql
+│   │   │   ├── users.sql
+│   │   ├── search_services/
+│   │   │   └── search.php
+│   │   ├── user_services/
+│   │   │   ├── admin_register_user.php
+│   │   │   ├── change_email.php
+│   │   │   ├── change_password.php
+│   │   │   ├── check_isAdmin.php
+│   │   │   ├── check_session.php
+│   │   │   ├── delete_user.php
+│   │   │   ├── get_users.php
+│   │   │   ├── login_user.php
+│   │   │   ├── logout_user.php
+│   │   │   ├── register_user.php
+│   │   │   ├── save_edit.php
+│   │   │   ├── toggle_admin.php
+│   │   ├── index.php
+│   │   └── router.php
+│   ├── Frontend/
+│   │   ├── css/
+│   │   │   ├── account_settings.css
+│   │   │   ├── database_config.css
+│   │   │   ├── signup_login.css
+│   │   │   ├── styles.css
+│   │   │   ├── user_management.css
+│   │   ├── js/
+│   │   │   ├── admin.js
+│   │   │   ├── config_db.js
+│   │   │   ├── config.js
+│   │   │   ├── header.js
+│   │   │   ├── scripts.js
+│   │   │   ├── search.js
+│   │   │   ├── user_management.js
+│   │   ├── admin.html
+│   │   ├── config_database.html
+│   │   ├── index.html
+│   │   ├── login.html
+│   │   ├── signup.html
+│   │   ├── user_management.html
+│   └── Documentation/
+│       ├── documentation.html
+└── README.md
+            </pre>
+        </section>
+
+        <section id="examples">
+            <h2>Examples</h2>
+            <h3>Login Example</h3>
+            <p>To log in, make a POST request to <code>/Backend/user_services/login_user.php</code> with the following JSON payload:</p>
+            <pre>
+{
+    "email": "user@example.com",
+    "password": "userpassword"
+}
+            </pre>
+            
+            <h3>Search Example</h3>
+            <p>To search for resources, make a GET request to <code>http://localhost/path-to-directory/ResourceFi/Web-Technologies/home</code> </p>
+        </section>
+
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>If you have any questions or need further assistance, please contact the development team at <a href="mailto:support@resourcefinder.com">support@resourcefinder.com</a>.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Resource Finder. All rights reserved.</p>
+    </footer>
+</body>
+</html>

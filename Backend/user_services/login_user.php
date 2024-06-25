@@ -22,17 +22,17 @@ if (isset($data['email']) && isset($data['password'])) {
 
     if ($stmt->num_rows > 0 && password_verify($password, $password_hash)) {
         // Login successful, set session variables
-        $_SESSION['user_id'] = $user_id; // Assuming 'id' is a unique identifier for the user
-        $_SESSION['email'] = $email; // Store email in session to use later if needed
+        $_SESSION['user_id'] = $user_id; 
+        $_SESSION['email'] = $email; 
 
-        // Optionally, set a session cookie with a custom expiration
+
         setcookie(session_name(), session_id(), [
-            'expires' => time() + 86400, // 1 day from now
+            'expires' => time() + 86400, 
             'path' => '/',
             'domain' => $_SERVER['HTTP_HOST'],
-            'secure' => true, // Set to true if using HTTPS
-            'httponly' => true, // This helps mitigate XSS attacks
-            'samesite' => 'Lax' // Helps mitigate CSRF attacks
+            'secure' => true, 
+            'httponly' => true, 
+            'samesite' => 'Lax'
         ]);
 
         echo json_encode(["success" => true, "message" => "Login successful."]);
